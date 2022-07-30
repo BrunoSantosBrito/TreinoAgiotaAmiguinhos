@@ -2,6 +2,7 @@ package handler
 
 import (
 	"TreinoAgiota/model"
+	"fmt"
 
 	DB "TreinoAgiota/database"
 
@@ -23,7 +24,7 @@ func (h H) Post(c *gin.Context) {
 	if err != nil {
 		return
 	}
-
+	fmt.Println(agiota)
 	c.JSON(200, gin.H{"response": agiota})
 
 }
