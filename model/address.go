@@ -9,12 +9,12 @@ import (
 
 type Address struct {
 	DB.Model
-	Rua string `json:"rua" binding:"-"`
-	Cep string `json:"cep" binding:"-"`
+	Rua         string `json:"rua" binding:"-"`
+	Cep         string `json:"cep" binding:"required"`
+	Complemento string `json:"complemento" binding:"required"`
 }
 
 func (a *Address) BeforeCreate(tx *gorm.DB) (err error) {
 	a.ID = uuid.New()
-
 	return
 }

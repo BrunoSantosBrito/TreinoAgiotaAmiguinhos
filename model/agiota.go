@@ -11,7 +11,6 @@ type Va struct{}
 
 type Agiota struct {
 	DB.Model
-
 	Name          string    `json:"name" binding:"-" `
 	Valor         string    `json:"valor" binding:"-" `
 	AddressID     uuid.UUID `json:"address_id" binding:"-"`

@@ -2,10 +2,12 @@ package main
 
 import (
 	DB "TreinoAgiota/database"
-	h "TreinoAgiota/handler"
 	"TreinoAgiota/model"
+	"TreinoAgiota/routes"
 	"log"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -19,13 +21,22 @@ func main() {
 
 	DB.DbConnection()
 
-	DB.Conn.AutoMigrate(&model.Agiota{}, &model.Address{})
+	DB.Conn.AutoMigrate(&model.Agiota{}, &model.Capanga{})
 
-	batata := h.H{}
+	router := gin.Default()
 
-	app := gin.New()
-	app.POST("/pojetinhocria", batata.Post)
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"POST", "GET", "DELETE", "PUT", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "authorization", "content-type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com/"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
-	app.Run(":8080")
-
+	routes.SetRoutes(router)
+	router.Run()
 }
