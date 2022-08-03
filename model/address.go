@@ -9,6 +9,7 @@ import (
 
 type Address struct {
 	DB.Model
+
 	Rua string `json:"rua" binding:"-"`
 	Cep string `json:"cep" binding:"-"`
 }
